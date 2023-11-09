@@ -1,99 +1,107 @@
 package com.weatherwear;
 
-import com.weatherwear.services.WeatherService;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-import org.junit.platform.commons.function.Try;
-import org.mockito.Mock;
-import org.mockito.Mockito;
-import org.mockito.invocation.InvocationOnMock;
-import org.mockito.stubbing.Answer;
+
 
 public class WeatherTests {
-    WeatherService weatherService;
     Weather weather;
 
-    final int TEMPERATURE_LESS_THAN_FIFTEEN_DEGREES = 4;
-    final int TEMPERATURE_FIFTEEN_DEGREES = 15;
-    final int TEMPERATURE_HIGHER_THAN_FIFTEEN_DEGREES = 16;
+    //final int TEMPERATURE_LESS_THAN_FIFTEEN_DEGREES = 4;
+    //final int TEMPERATURE_FIFTEEN_DEGREES = 15;
+    //final int TEMPERATURE_HIGHER_THAN_FIFTEEN_DEGREES = 16;
 
     @BeforeEach
     public void setup() {
         weather = new Weather();
     }
+    //String test1 = "{\"location\":{\"name\":\"Tarxien\",\"region\":\"\",\"country\":\"Malta\",\"lat\":35.87,\"lon\":14.52,\"tz_id\":\"Europe/Malta\",\"localtime_epoch\":1699520569,\"localtime\":\"2023-11-09 10:02\"},\"current\":{\"last_updated_epoch\":1699520400,\"last_updated\":\"2023-11-09 10:00\",\"temp_c\":21.0,\"temp_f\":69.8,\"is_day\":1,\"condition\":{\"text\":\"Partly cloudy\",\"icon\":\"//cdn.weatherapi.com/weather/64x64/day/116.png\",\"code\":1003},\"wind_mph\":10.5,\"wind_kph\":16.9,\"wind_degree\":50,\"wind_dir\":\"NE\",\"pressure_mb\":1020.0,\"pressure_in\":30.12,\"precip_mm\":0.05,\"precip_in\":0.0,\"humidity\":69,\"cloud\":50,\"feelslike_c\":21.0,\"feelslike_f\":69.8,\"vis_km\":10.0,\"vis_miles\":6.0,\"uv\":5.0,\"gust_mph\":10.4,\"gust_kph\":16.8}}";
+    //String test2 = "{\"location\":{\"name\":\"Luqa\",\"region\":\"\",\"country\":\"Malta\",\"lat\":35.86,\"lon\":14.48,\"tz_id\":\"Europe/Malta\",\"localtime_epoch\":1699520648,\"localtime\":\"2023-11-09 10:04\"},\"current\":{\"last_updated_epoch\":1699520400,\"last_updated\":\"2023-11-09 10:00\",\"temp_c\":21.0,\"temp_f\":69.8,\"is_day\":1,\"condition\":{\"text\":\"Partly cloudy\",\"icon\":\"//cdn.weatherapi.com/weather/64x64/day/116.png\",\"code\":1003},\"wind_mph\":10.5,\"wind_kph\":16.9,\"wind_degree\":50,\"wind_dir\":\"NE\",\"pressure_mb\":1020.0,\"pressure_in\":30.12,\"precip_mm\":0.05,\"precip_in\":0.0,\"humidity\":69,\"cloud\":50,\"feelslike_c\":21.0,\"feelslike_f\":69.8,\"vis_km\":10.0,\"vis_miles\":6.0,\"uv\":5.0,\"gust_mph\":10.4,\"gust_kph\":16.8},\"forecast\":{\"forecastday\":[{\"date\":\"2023-11-11\",\"date_epoch\":1699660800,\"day\":{\"maxtemp_c\":21.6,\"maxtemp_f\":70.9,\"mintemp_c\":19.7,\"mintemp_f\":67.5,\"avgtemp_c\":20.8,\"avgtemp_f\":69.5,\"maxwind_mph\":26.4,\"maxwind_kph\":42.5,\"totalprecip_mm\":2.62,\"totalprecip_in\":0.1,\"totalsnow_cm\":0.0,\"avgvis_km\":10.0,\"avgvis_miles\":6.0,\"avghumidity\":64.0,\"daily_will_it_rain\":1,\"daily_chance_of_rain\":88,\"daily_will_it_snow\":0,\"daily_chance_of_snow\":0,\"condition\":{\"text\":\"Patchy rain possible\",\"icon\":\"//cdn.weatherapi.com/weather/64x64/day/176.png\",\"code\":1063},\"uv\":5.0},\"astro\":{\"sunrise\":\"06:34 AM\",\"sunset\":\"04:58 PM\",\"moonrise\":\"04:29 AM\",\"moonset\":\"03:51 PM\",\"moon_phase\":\"Waning Crescent\",\"moon_illumination\":6,\"is_moon_up\":0,\"is_sun_up\":0},\"hour\":[{\"time_epoch\":1699657200,\"time\":\"2023-11-11 00:00\",\"temp_c\":20.5,\"temp_f\":68.9,\"is_day\":0,\"condition\":{\"text\":\"Overcast\",\"icon\":\"//cdn.weatherapi.com/weather/64x64/night/122.png\",\"code\":1009},\"wind_mph\":18.3,\"wind_kph\":29.5,\"wind_degree\":288,\"wind_dir\":\"WNW\",\"pressure_mb\":1015.0,\"pressure_in\":29.97,\"precip_mm\":0.0,\"precip_in\":0.0,\"humidity\":64,\"cloud\":94,\"feelslike_c\":20.5,\"feelslike_f\":68.9,\"windchill_c\":20.5,\"windchill_f\":68.9,\"heatindex_c\":20.5,\"heatindex_f\":68.9,\"dewpoint_c\":13.4,\"dewpoint_f\":56.0,\"will_it_rain\":0,\"chance_of_rain\":0,\"will_it_snow\":0,\"chance_of_snow\":0,\"vis_km\":10.0,\"vis_miles\":6.0,\"gust_mph\":26.5,\"gust_kph\":42.6,\"uv\":1.0},{\"time_epoch\":1699660800,\"time\":\"2023-11-11 01:00\",\"temp_c\":20.6,\"temp_f\":69.0,\"is_day\":0,\"condition\":{\"text\":\"Partly cloudy\",\"icon\":\"//cdn.weatherapi.com/weather/64x64/night/116.png\",\"code\":1003},\"wind_mph\":18.3,\"wind_kph\":29.5,\"wind_degree\":286,\"wind_dir\":\"WNW\",\"pressure_mb\":1015.0,\"pressure_in\":29.97,\"precip_mm\":0.0,\"precip_in\":0.0,\"humidity\":61,\"cloud\":36,\"feelslike_c\":20.6,\"feelslike_f\":69.0,\"windchill_c\":20.6,\"windchill_f\":69.0,\"heatindex_c\":20.6,\"heatindex_f\":69.0,\"dewpoint_c\":12.9,\"dewpoint_f\":55.2,\"will_it_rain\":0,\"chance_of_rain\":0,\"will_it_snow\":0,\"chance_of_snow\":0,\"vis_km\":10.0,\"vis_miles\":6.0,\"gust_mph\":26.0,\"gust_kph\":41.9,\"uv\":1.0},{\"time_epoch\":1699664400,\"time\":\"2023-11-11 02:00\",\"temp_c\":21.2,\"temp_f\":70.1,\"is_day\":0,\"condition\":{\"text\":\"Clear\",\"icon\":\"//cdn.weatherapi.com/weather/64x64/night/113.png\",\"code\":1000},\"wind_mph\":19.5,\"wind_kph\":31.3,\"wind_degree\":284,\"wind_dir\":\"WNW\",\"pressure_mb\":1014.0,\"pressure_in\":29.96,\"precip_mm\":0.0,\"precip_in\":0.0,\"humidity\":61,\"cloud\":10,\"feelslike_c\":21.2,\"feelslike_f\":70.1,\"windchill_c\":21.2,\"windchill_f\":70.1,\"heatindex_c\":24.5,\"heatindex_f\":76.0,\"dewpoint_c\":13.4,\"dewpoint_f\":56.1,\"will_it_rain\":0,\"chance_of_rain\":0,\"will_it_snow\":0,\"chance_of_snow\":0,\"vis_km\":10.0,\"vis_miles\":6.0,\"gust_mph\":23.9,\"gust_kph\":38.5,\"uv\":1.0},{\"time_epoch\":1699668000,\"time\":\"2023-11-11 03:00\",\"temp_c\":21.1,\"temp_f\":70.0,\"is_day\":0,\"condition\":{\"text\":\"Clear\",\"icon\":\"//cdn.weatherapi.com/weather/64x64/night/113.png\",\"code\":1000},\"wind_mph\":19.2,\"wind_kph\":31.0,\"wind_degree\":285,\"wind_dir\":\"WNW\",\"pressure_mb\":1014.0,\"pressure_in\":29.94,\"precip_mm\":0.0,\"precip_in\":0.0,\"humidity\":63,\"cloud\":15,\"feelslike_c\":21.1,\"feelslike_f\":70.0,\"windchill_c\":21.1,\"windchill_f\":70.0,\"heatindex_c\":24.4,\"heatindex_f\":76.0,\"dewpoint_c\":13.8,\"dewpoint_f\":56.8,\"will_it_rain\":0,\"chance_of_rain\":0,\"will_it_snow\":0,\"chance_of_snow\":0,\"vis_km\":10.0,\"vis_miles\":6.0,\"gust_mph\":23.6,\"gust_kph\":38.0,\"uv\":1.0},{\"time_epoch\":1699671600,\"time\":\"2023-11-11 04:00\",\"temp_c\":21.3,\"temp_f\":70.3,\"is_day\":0,\"condition\":{\"text\":\"Clear\",\"icon\":\"//cdn.weatherapi.com/weather/64x64/night/113.png\",\"code\":1000},\"wind_mph\":21.3,\"wind_kph\":34.2,\"wind_degree\":287,\"wind_dir\":\"WNW\",\"pressure_mb\":1014.0,\"pressure_in\":29.94,\"precip_mm\":0.0,\"precip_in\":0.0,\"humidity\":61,\"cloud\":14,\"feelslike_c\":21.3,\"feelslike_f\":70.3,\"windchill_c\":21.3,\"windchill_f\":70.3,\"heatindex_c\":24.5,\"heatindex_f\":76.0,\"dewpoint_c\":13.6,\"dewpoint_f\":56.4,\"will_it_rain\":0,\"chance_of_rain\":0,\"will_it_snow\":0,\"chance_of_snow\":0,\"vis_km\":10.0,\"vis_miles\":6.0,\"gust_mph\":26.1,\"gust_kph\":42.0,\"uv\":1.0},{\"time_epoch\":1699675200,\"time\":\"2023-11-11 05:00\",\"temp_c\":21.3,\"temp_f\":70.4,\"is_day\":0,\"condition\":{\"text\":\"Clear\",\"icon\":\"//cdn.weatherapi.com/weather/64x64/night/113.png\",\"code\":1000},\"wind_mph\":21.9,\"wind_kph\":35.3,\"wind_degree\":286,\"wind_dir\":\"WNW\",\"pressure_mb\":1014.0,\"pressure_in\":29.94,\"precip_mm\":0.0,\"precip_in\":0.0,\"humidity\":60,\"cloud\":5,\"feelslike_c\":21.3,\"feelslike_f\":70.4,\"windchill_c\":21.3,\"windchill_f\":70.4,\"heatindex_c\":24.5,\"heatindex_f\":76.0,\"dewpoint_c\":13.3,\"dewpoint_f\":55.9,\"will_it_rain\":0,\"chance_of_rain\":0,\"will_it_snow\":0,\"chance_of_snow\":0,\"vis_km\":10.0,\"vis_miles\":6.0,\"gust_mph\":27.0,\"gust_kph\":43.5,\"uv\":1.0},{\"time_epoch\":1699678800,\"time\":\"2023-11-11 06:00\",\"temp_c\":21.3,\"temp_f\":70.4,\"is_day\":0,\"condition\":{\"text\":\"Clear\",\"icon\":\"//cdn.weatherapi.com/weather/64x64/night/113.png\",\"code\":1000},\"wind_mph\":22.4,\"wind_kph\":36.0,\"wind_degree\":284,\"wind_dir\":\"WNW\",\"pressure_mb\":1014.0,\"pressure_in\":29.95,\"precip_mm\":0.0,\"precip_in\":0.0,\"humidity\":61,\"cloud\":1,\"feelslike_c\":21.3,\"feelslike_f\":70.4,\"windchill_c\":21.3,\"windchill_f\":70.4,\"heatindex_c\":24.5,\"heatindex_f\":76.0,\"dewpoint_c\":13.5,\"dewpoint_f\":56.3,\"will_it_rain\":0,\"chance_of_rain\":0,\"will_it_snow\":0,\"chance_of_snow\":0,\"vis_km\":10.0,\"vis_miles\":6.0,\"gust_mph\":27.5,\"gust_kph\":44.2,\"uv\":1.0},{\"time_epoch\":1699682400,\"time\":\"2023-11-11 07:00\",\"temp_c\":21.5,\"temp_f\":70.6,\"is_day\":1,\"condition\":{\"text\":\"Sunny\",\"icon\":\"//cdn.weatherapi.com/weather/64x64/day/113.png\",\"code\":1000},\"wind_mph\":23.3,\"wind_kph\":37.4,\"wind_degree\":282,\"wind_dir\":\"WNW\",\"pressure_mb\":1015.0,\"pressure_in\":29.96,\"precip_mm\":0.0,\"precip_in\":0.0,\"humidity\":60,\"cloud\":6,\"feelslike_c\":21.5,\"feelslike_f\":70.6,\"windchill_c\":21.5,\"windchill_f\":70.6,\"heatindex_c\":24.5,\"heatindex_f\":76.0,\"dewpoint_c\":13.4,\"dewpoint_f\":56.1,\"will_it_rain\":0,\"chance_of_rain\":0,\"will_it_snow\":0,\"chance_of_snow\":0,\"vis_km\":10.0,\"vis_miles\":6.0,\"gust_mph\":28.5,\"gust_kph\":45.9,\"uv\":6.0},{\"time_epoch\":1699686000,\"time\":\"2023-11-11 08:00\",\"temp_c\":21.6,\"temp_f\":70.9,\"is_day\":1,\"condition\":{\"text\":\"Partly cloudy\",\"icon\":\"//cdn.weatherapi.com/weather/64x64/day/116.png\",\"code\":1003},\"wind_mph\":23.7,\"wind_kph\":38.2,\"wind_degree\":278,\"wind_dir\":\"W\",\"pressure_mb\":1015.0,\"pressure_in\":29.97,\"precip_mm\":0.0,\"precip_in\":0.0,\"humidity\":60,\"cloud\":28,\"feelslike_c\":21.6,\"feelslike_f\":70.9,\"windchill_c\":21.6,\"windchill_f\":70.9,\"heatindex_c\":24.5,\"heatindex_f\":76.1,\"dewpoint_c\":13.7,\"dewpoint_f\":56.6,\"will_it_rain\":0,\"chance_of_rain\":0,\"will_it_snow\":0,\"chance_of_snow\":0,\"vis_km\":10.0,\"vis_miles\":6.0,\"gust_mph\":28.5,\"gust_kph\":45.9,\"uv\":6.0},{\"time_epoch\":1699689600,\"time\":\"2023-11-11 09:00\",\"temp_c\":21.6,\"temp_f\":70.8,\"is_day\":1,\"condition\":{\"text\":\"Patchy rain possible\",\"icon\":\"//cdn.weatherapi.com/weather/64x64/day/176.png\",\"code\":1063},\"wind_mph\":24.8,\"wind_kph\":40.0,\"wind_degree\":279,\"wind_dir\":\"W\",\"pressure_mb\":1015.0,\"pressure_in\":29.98,\"precip_mm\":0.12,\"precip_in\":0.0,\"humidity\":64,\"cloud\":60,\"feelslike_c\":21.6,\"feelslike_f\":70.8,\"windchill_c\":21.6,\"windchill_f\":70.8,\"heatindex_c\":24.5,\"heatindex_f\":76.1,\"dewpoint_c\":14.5,\"dewpoint_f\":58.0,\"will_it_rain\":0,\"chance_of_rain\":56,\"will_it_snow\":0,\"chance_of_snow\":0,\"vis_km\":10.0,\"vis_miles\":6.0,\"gust_mph\":29.3,\"gust_kph\":47.2,\"uv\":5.0},{\"time_epoch\":1699693200,\"time\":\"2023-11-11 10:00\",\"temp_c\":21.4,\"temp_f\":70.6,\"is_day\":1,\"condition\":{\"text\":\"Light rain shower\",\"icon\":\"//cdn.weatherapi.com/weather/64x64/day/353.png\",\"code\":1240},\"wind_mph\":24.8,\"wind_kph\":40.0,\"wind_degree\":278,\"wind_dir\":\"W\",\"pressure_mb\":1015.0,\"pressure_in\":29.98,\"precip_mm\":0.49,\"precip_in\":0.02,\"humidity\":66,\"cloud\":72,\"feelslike_c\":21.4,\"feelslike_f\":70.6,\"windchill_c\":21.4,\"windchill_f\":70.6,\"heatindex_c\":24.5,\"heatindex_f\":76.0,\"dewpoint_c\":14.9,\"dewpoint_f\":58.9,\"will_it_rain\":0,\"chance_of_rain\":69,\"will_it_snow\":0,\"chance_of_snow\":0,\"vis_km\":10.0,\"vis_miles\":6.0,\"gust_mph\":29.9,\"gust_kph\":48.1,\"uv\":5.0},{\"time_epoch\":1699696800,\"time\":\"2023-11-11 11:00\",\"temp_c\":21.4,\"temp_f\":70.5,\"is_day\":1,\"condition\":{\"text\":\"Light rain shower\",\"icon\":\"//cdn.weatherapi.com/weather/64x64/day/353.png\",\"code\":1240},\"wind_mph\":25.1,\"wind_kph\":40.3,\"wind_degree\":278,\"wind_dir\":\"W\",\"pressure_mb\":1015.0,\"pressure_in\":29.98,\"precip_mm\":0.6,\"precip_in\":0.02,\"humidity\":68,\"cloud\":84,\"feelslike_c\":21.4,\"feelslike_f\":70.5,\"windchill_c\":21.4,\"windchill_f\":70.5,\"heatindex_c\":24.5,\"heatindex_f\":76.0,\"dewpoint_c\":15.2,\"dewpoint_f\":59.3,\"will_it_rain\":0,\"chance_of_rain\":57,\"will_it_snow\":0,\"chance_of_snow\":0,\"vis_km\":10.0,\"vis_miles\":6.0,\"gust_mph\":33.0,\"gust_kph\":53.1,\"uv\":5.0},{\"time_epoch\":1699700400,\"time\":\"2023-11-11 12:00\",\"temp_c\":21.3,\"temp_f\":70.3,\"is_day\":1,\"condition\":{\"text\":\"Light rain shower\",\"icon\":\"//cdn.weatherapi.com/weather/64x64/day/353.png\",\"code\":1240},\"wind_mph\":26.4,\"wind_kph\":42.5,\"wind_degree\":283,\"wind_dir\":\"WNW\",\"pressure_mb\":1015.0,\"pressure_in\":29.97,\"precip_mm\":0.63,\"precip_in\":0.02,\"humidity\":69,\"cloud\":88,\"feelslike_c\":21.3,\"feelslike_f\":70.3,\"windchill_c\":21.3,\"windchill_f\":70.3,\"heatindex_c\":24.4,\"heatindex_f\":76.0,\"dewpoint_c\":15.5,\"dewpoint_f\":59.9,\"will_it_rain\":1,\"chance_of_rain\":75,\"will_it_snow\":0,\"chance_of_snow\":0,\"vis_km\":10.0,\"vis_miles\":6.0,\"gust_mph\":37.5,\"gust_kph\":60.4,\"uv\":5.0},{\"time_epoch\":1699704000,\"time\":\"2023-11-11 13:00\",\"temp_c\":21.1,\"temp_f\":70.0,\"is_day\":1,\"condition\":{\"text\":\"Light rain shower\",\"icon\":\"//cdn.weatherapi.com/weather/64x64/day/353.png\",\"code\":1240},\"wind_mph\":25.1,\"wind_kph\":40.3,\"wind_degree\":286,\"wind_dir\":\"WNW\",\"pressure_mb\":1015.0,\"pressure_in\":29.96,\"precip_mm\":0.22,\"precip_in\":0.01,\"humidity\":69,\"cloud\":55,\"feelslike_c\":21.1,\"feelslike_f\":70.0,\"windchill_c\":21.1,\"windchill_f\":70.0,\"heatindex_c\":24.4,\"heatindex_f\":75.9,\"dewpoint_c\":15.3,\"dewpoint_f\":59.5,\"will_it_rain\":0,\"chance_of_rain\":68,\"will_it_snow\":0,\"chance_of_snow\":0,\"vis_km\":10.0,\"vis_miles\":6.0,\"gust_mph\":38.0,\"gust_kph\":61.2,\"uv\":5.0},{\"time_epoch\":1699707600,\"time\":\"2023-11-11 14:00\",\"temp_c\":21.0,\"temp_f\":69.8,\"is_day\":1,\"condition\":{\"text\":\"Light rain shower\",\"icon\":\"//cdn.weatherapi.com/weather/64x64/day/353.png\",\"code\":1240},\"wind_mph\":21.7,\"wind_kph\":34.9,\"wind_degree\":295,\"wind_dir\":\"WNW\",\"pressure_mb\":1015.0,\"pressure_in\":29.97,\"precip_mm\":0.27,\"precip_in\":0.01,\"humidity\":68,\"cloud\":50,\"feelslike_c\":21.0,\"feelslike_f\":69.8,\"windchill_c\":21.0,\"windchill_f\":69.8,\"heatindex_c\":24.4,\"heatindex_f\":75.9,\"dewpoint_c\":15.0,\"dewpoint_f\":59.0,\"will_it_rain\":1,\"chance_of_rain\":75,\"will_it_snow\":0,\"chance_of_snow\":0,\"vis_km\":10.0,\"vis_miles\":6.0,\"gust_mph\":25.7,\"gust_kph\":41.3,\"uv\":5.0},{\"time_epoch\":1699711200,\"time\":\"2023-11-11 15:00\",\"temp_c\":20.9,\"temp_f\":69.7,\"is_day\":1,\"condition\":{\"text\":\"Light rain shower\",\"icon\":\"//cdn.weatherapi.com/weather/64x64/day/353.png\",\"code\":1240},\"wind_mph\":19.5,\"wind_kph\":31.3,\"wind_degree\":299,\"wind_dir\":\"WNW\",\"pressure_mb\":1015.0,\"pressure_in\":29.97,\"precip_mm\":0.2,\"precip_in\":0.01,\"humidity\":69,\"cloud\":70,\"feelslike_c\":20.9,\"feelslike_f\":69.7,\"windchill_c\":20.9,\"windchill_f\":69.7,\"heatindex_c\":20.9,\"heatindex_f\":69.7,\"dewpoint_c\":14.9,\"dewpoint_f\":58.9,\"will_it_rain\":0,\"chance_of_rain\":67,\"will_it_snow\":0,\"chance_of_snow\":0,\"vis_km\":10.0,\"vis_miles\":6.0,\"gust_mph\":23.8,\"gust_kph\":38.3,\"uv\":5.0},{\"time_epoch\":1699714800,\"time\":\"2023-11-11 16:00\",\"temp_c\":20.8,\"temp_f\":69.4,\"is_day\":1,\"condition\":{\"text\":\"Patchy rain possible\",\"icon\":\"//cdn.weatherapi.com/weather/64x64/day/176.png\",\"code\":1063},\"wind_mph\":18.1,\"wind_kph\":29.2,\"wind_degree\":302,\"wind_dir\":\"WNW\",\"pressure_mb\":1015.0,\"pressure_in\":29.97,\"precip_mm\":0.06,\"precip_in\":0.0,\"humidity\":68,\"cloud\":66,\"feelslike_c\":20.8,\"feelslike_f\":69.4,\"windchill_c\":20.8,\"windchill_f\":69.4,\"heatindex_c\":20.8,\"heatindex_f\":69.4,\"dewpoint_c\":14.8,\"dewpoint_f\":58.6,\"will_it_rain\":1,\"chance_of_rain\":87,\"will_it_snow\":0,\"chance_of_snow\":0,\"vis_km\":10.0,\"vis_miles\":6.0,\"gust_mph\":22.5,\"gust_kph\":36.2,\"uv\":5.0},{\"time_epoch\":1699718400,\"time\":\"2023-11-11 17:00\",\"temp_c\":20.5,\"temp_f\":68.8,\"is_day\":0,\"condition\":{\"text\":\"Patchy rain possible\",\"icon\":\"//cdn.weatherapi.com/weather/64x64/night/176.png\",\"code\":1063},\"wind_mph\":16.1,\"wind_kph\":25.9,\"wind_degree\":301,\"wind_dir\":\"WNW\",\"pressure_mb\":1015.0,\"pressure_in\":29.97,\"precip_mm\":0.01,\"precip_in\":0.0,\"humidity\":67,\"cloud\":73,\"feelslike_c\":20.5,\"feelslike_f\":68.8,\"windchill_c\":20.5,\"windchill_f\":68.8,\"heatindex_c\":20.5,\"heatindex_f\":68.8,\"dewpoint_c\":14.3,\"dewpoint_f\":57.7,\"will_it_rain\":0,\"chance_of_rain\":61,\"will_it_snow\":0,\"chance_of_snow\":0,\"vis_km\":10.0,\"vis_miles\":6.0,\"gust_mph\":20.3,\"gust_kph\":32.6,\"uv\":1.0},{\"time_epoch\":1699722000,\"time\":\"2023-11-11 18:00\",\"temp_c\":20.0,\"temp_f\":68.0,\"is_day\":0,\"condition\":{\"text\":\"Partly cloudy\",\"icon\":\"//cdn.weatherapi.com/weather/64x64/night/116.png\",\"code\":1003},\"wind_mph\":16.1,\"wind_kph\":25.9,\"wind_degree\":299,\"wind_dir\":\"WNW\",\"pressure_mb\":1015.0,\"pressure_in\":29.99,\"precip_mm\":0.0,\"precip_in\":0.0,\"humidity\":65,\"cloud\":46,\"feelslike_c\":20.0,\"feelslike_f\":68.0,\"windchill_c\":20.0,\"windchill_f\":68.0,\"heatindex_c\":20.0,\"heatindex_f\":68.0,\"dewpoint_c\":13.3,\"dewpoint_f\":55.9,\"will_it_rain\":0,\"chance_of_rain\":0,\"will_it_snow\":0,\"chance_of_snow\":0,\"vis_km\":10.0,\"vis_miles\":6.0,\"gust_mph\":23.1,\"gust_kph\":37.2,\"uv\":1.0},{\"time_epoch\":1699725600,\"time\":\"2023-11-11 19:00\",\"temp_c\":20.0,\"temp_f\":68.1,\"is_day\":0,\"condition\":{\"text\":\"Patchy rain possible\",\"icon\":\"//cdn.weatherapi.com/weather/64x64/night/176.png\",\"code\":1063},\"wind_mph\":17.2,\"wind_kph\":27.7,\"wind_degree\":301,\"wind_dir\":\"WNW\",\"pressure_mb\":1016.0,\"pressure_in\":30.0,\"precip_mm\":0.01,\"precip_in\":0.0,\"humidity\":64,\"cloud\":76,\"feelslike_c\":20.0,\"feelslike_f\":68.1,\"windchill_c\":20.0,\"windchill_f\":68.1,\"heatindex_c\":20.0,\"heatindex_f\":68.1,\"dewpoint_c\":13.0,\"dewpoint_f\":55.5,\"will_it_rain\":1,\"chance_of_rain\":88,\"will_it_snow\":0,\"chance_of_snow\":0,\"vis_km\":10.0,\"vis_miles\":6.0,\"gust_mph\":24.7,\"gust_kph\":39.8,\"uv\":1.0},{\"time_epoch\":1699729200,\"time\":\"2023-11-11 20:00\",\"temp_c\":19.9,\"temp_f\":67.9,\"is_day\":0,\"condition\":{\"text\":\"Patchy rain possible\",\"icon\":\"//cdn.weatherapi.com/weather/64x64/night/176.png\",\"code\":1063},\"wind_mph\":17.2,\"wind_kph\":27.7,\"wind_degree\":304,\"wind_dir\":\"NW\",\"pressure_mb\":1016.0,\"pressure_in\":30.02,\"precip_mm\":0.01,\"precip_in\":0.0,\"humidity\":64,\"cloud\":82,\"feelslike_c\":19.9,\"feelslike_f\":67.9,\"windchill_c\":19.9,\"windchill_f\":67.9,\"heatindex_c\":19.9,\"heatindex_f\":67.9,\"dewpoint_c\":12.9,\"dewpoint_f\":55.2,\"will_it_rain\":0,\"chance_of_rain\":67,\"will_it_snow\":0,\"chance_of_snow\":0,\"vis_km\":10.0,\"vis_miles\":6.0,\"gust_mph\":24.9,\"gust_kph\":40.1,\"uv\":1.0},{\"time_epoch\":1699732800,\"time\":\"2023-11-11 21:00\",\"temp_c\":19.9,\"temp_f\":67.9,\"is_day\":0,\"condition\":{\"text\":\"Clear\",\"icon\":\"//cdn.weatherapi.com/weather/64x64/night/113.png\",\"code\":1000},\"wind_mph\":15.9,\"wind_kph\":25.6,\"wind_degree\":302,\"wind_dir\":\"WNW\",\"pressure_mb\":1017.0,\"pressure_in\":30.02,\"precip_mm\":0.0,\"precip_in\":0.0,\"humidity\":63,\"cloud\":18,\"feelslike_c\":19.9,\"feelslike_f\":67.9,\"windchill_c\":19.9,\"windchill_f\":67.9,\"heatindex_c\":19.9,\"heatindex_f\":67.9,\"dewpoint_c\":12.6,\"dewpoint_f\":54.7,\"will_it_rain\":0,\"chance_of_rain\":0,\"will_it_snow\":0,\"chance_of_snow\":0,\"vis_km\":10.0,\"vis_miles\":6.0,\"gust_mph\":22.8,\"gust_kph\":36.8,\"uv\":1.0},{\"time_epoch\":1699736400,\"time\":\"2023-11-11 22:00\",\"temp_c\":19.8,\"temp_f\":67.6,\"is_day\":0,\"condition\":{\"text\":\"Clear\",\"icon\":\"//cdn.weatherapi.com/weather/64x64/night/113.png\",\"code\":1000},\"wind_mph\":13.9,\"wind_kph\":22.3,\"wind_degree\":297,\"wind_dir\":\"WNW\",\"pressure_mb\":1017.0,\"pressure_in\":30.02,\"precip_mm\":0.0,\"precip_in\":0.0,\"humidity\":62,\"cloud\":11,\"feelslike_c\":19.8,\"feelslike_f\":67.6,\"windchill_c\":19.8,\"windchill_f\":67.6,\"heatindex_c\":19.8,\"heatindex_f\":67.6,\"dewpoint_c\":12.4,\"dewpoint_f\":54.2,\"will_it_rain\":0,\"chance_of_rain\":0,\"will_it_snow\":0,\"chance_of_snow\":0,\"vis_km\":10.0,\"vis_miles\":6.0,\"gust_mph\":20.3,\"gust_kph\":32.7,\"uv\":1.0},{\"time_epoch\":1699740000,\"time\":\"2023-11-11 23:00\",\"temp_c\":19.7,\"temp_f\":67.5,\"is_day\":0,\"condition\":{\"text\":\"Partly cloudy\",\"icon\":\"//cdn.weatherapi.com/weather/64x64/night/116.png\",\"code\":1003},\"wind_mph\":14.3,\"wind_kph\":23.0,\"wind_degree\":291,\"wind_dir\":\"WNW\",\"pressure_mb\":1016.0,\"pressure_in\":30.02,\"precip_mm\":0.0,\"precip_in\":0.0,\"humidity\":64,\"cloud\":34,\"feelslike_c\":19.8,\"feelslike_f\":67.6,\"windchill_c\":19.8,\"windchill_f\":67.6,\"heatindex_c\":19.8,\"heatindex_f\":67.6,\"dewpoint_c\":12.7,\"dewpoint_f\":54.8,\"will_it_rain\":0,\"chance_of_rain\":0,\"will_it_snow\":0,\"chance_of_snow\":0,\"vis_km\":10.0,\"vis_miles\":6.0,\"gust_mph\":21.0,\"gust_kph\":33.9,\"uv\":1.0}]}]}}";
+
+
+
+
+    /*
+    @Test
+    public void testWeatherLessThanFifteenDegrees() throws IOException, InterruptedException {
+        //setup
+        WeatherService weatherService = Mockito.mock(WeatherService.class);
+        Mockito.when(weatherService.requestWeather()).thenReturn(new WeatherResult(TEMPERATURE_LESS_THAN_FIFTEEN_DEGREES, 0));
+        //exercise
+        boolean result = weather.recommendColdClothing(weatherService);
+        //verify
+        Assertions.assertTrue(result);
+        //teardown
+    }
+    @Test
+    public void testWeatherAtFifteenDegrees() throws IOException, InterruptedException {
+        //setup
+        WeatherService weatherService = Mockito.mock(WeatherService.class);
+        Mockito.when(weatherService.requestWeather()).thenReturn(new WeatherResult(TEMPERATURE_FIFTEEN_DEGREES, 0));
+        //exercise
+        boolean result = weather.recommendColdClothing(weatherService);
+        //verify
+        Assertions.assertTrue(result);
+        //teardown
+    }
+    @Test
+    public void testWeatherHigherThanFifteenDegrees() throws IOException, InterruptedException {
+        //setup
+        WeatherService weatherService = Mockito.mock(WeatherService.class);
+        Mockito.when(weatherService.requestWeather()).thenReturn(new WeatherResult(TEMPERATURE_HIGHER_THAN_FIFTEEN_DEGREES, 0));
+        //exercise
+        boolean result = weather.recommendColdClothing(weatherService);
+        //verify
+        Assertions.assertFalse(result);
+        //teardown
+    }
 
     @Test
-    public void testWeatherLessThanFifteenDegrees() {
+    public void testWeatherIsRaining() throws IOException, InterruptedException {
         //setup
         WeatherService weatherService = Mockito.mock(WeatherService.class);
-        Mockito.when(weatherService.getWeather()).thenReturn(new WeatherResult(TEMPERATURE_LESS_THAN_FIFTEEN_DEGREES, false));
+        Mockito.when(weatherService.requestWeather()).thenReturn(new WeatherResult(TEMPERATURE_FIFTEEN_DEGREES, 1));
         //exercise
-        boolean result = weather.recommendColdClothing(weatherService);
+        boolean result = weather.recommendUmbrella(weatherService);
         //verify
         Assertions.assertTrue(result);
         //teardown
     }
     @Test
-    public void testWeatherAtFifteenDegrees() {
+    public void testWeatherIsNotRaining() throws IOException, InterruptedException {
         //setup
         WeatherService weatherService = Mockito.mock(WeatherService.class);
-        Mockito.when(weatherService.getWeather()).thenReturn(new WeatherResult(TEMPERATURE_FIFTEEN_DEGREES, false));
+        Mockito.when(weatherService.requestWeather()).thenReturn(new WeatherResult(TEMPERATURE_FIFTEEN_DEGREES, 0));
         //exercise
-        boolean result = weather.recommendColdClothing(weatherService);
+        boolean result = weather.recommendUmbrella(weatherService);
         //verify
-        Assertions.assertTrue(result);
+        Assertions.assertFalse(result);
         //teardown
     }
     @Test
-    public void testWeatherHigherThanFifteenDegrees() {
+    public void testWeatherServiceNull() throws IOException, InterruptedException {
         //setup
         WeatherService weatherService = Mockito.mock(WeatherService.class);
-        Mockito.when(weatherService.getWeather()).thenReturn(new WeatherResult(TEMPERATURE_HIGHER_THAN_FIFTEEN_DEGREES, false));
+        Mockito.when(weatherService.requestWeather()).thenReturn(new WeatherResult());
         //exercise
-        boolean result = weather.recommendColdClothing(weatherService);
+        boolean result = weather.recommendUmbrella(weatherService);
         //verify
         Assertions.assertFalse(result);
         //teardown
     }
 
     @Test
-    public void testWeatherIsRaining() {
+    public void testOverriddenWeatherServiceOutput() throws IOException, InterruptedException {
         //setup
-        WeatherService weatherService = Mockito.mock(WeatherService.class);
-        Mockito.when(weatherService.getWeather()).thenReturn(new WeatherResult(TEMPERATURE_FIFTEEN_DEGREES, true));
+        Weather mockWeather = Mockito.mock(Weather.class);
+        Mockito.when(mockWeather.requestWeather()).thenReturn(new WeatherResult(15, 1));
         //exercise
-        boolean result = weather.recommendUmbrella(weatherService);
+        WeatherResult testResult = mockWeather.requestWeather();
         //verify
-        Assertions.assertTrue(result);
+        Assertions.assertEquals(15, testResult.temperature);
+        //Assertions.assertEquals(testResult.);
+
         //teardown
     }
-    @Test
-    public void testWeatherIsNotRaining() {
-        //setup
-        WeatherService weatherService = Mockito.mock(WeatherService.class);
-        Mockito.when(weatherService.getWeather()).thenReturn(new WeatherResult(TEMPERATURE_FIFTEEN_DEGREES, false));
-        //exercise
-        boolean result = weather.recommendUmbrella(weatherService);
-        //verify
-        Assertions.assertFalse(result);
-        //teardown
-    }
-    @Test
-    public void testWeatherServiceNull() {
-        //setup
-        WeatherService weatherService = Mockito.mock(WeatherService.class);
-        Mockito.when(weatherService.getWeather()).thenAnswer(new Answer<WeatherResult>() {
-            @Override
-            public WeatherResult answer(InvocationOnMock invocation) throws InterruptedException {
-                Thread.sleep(5000);
-                return new WeatherResult(TEMPERATURE_FIFTEEN_DEGREES, false);
-            }
-        }) ;
-        //exercise
-        boolean result = weather.recommendUmbrella(weatherService);
-        //verify
-        Assertions.assertFalse(result);
-        //teardown
-    }
+    */
+
 }
