@@ -2,11 +2,21 @@ package com.weatherwear;
 
 public class WeatherResult {
 
-    public int temperature;
-    public boolean isRaining;
+    public String country;
+    public String name;
+    public float temperature;
+    public float precipitation;
 
-    public WeatherResult(int temperature, boolean isRaining) {
+
+
+    public WeatherResult(String country, String name, float temperature, float precipitation) {
+        this.country = country;
+        this.name = name;
         this.temperature = temperature;
-        this.isRaining = isRaining;
+        this.precipitation = precipitation;
+    }
+    public WeatherResult(float temperature, float precipitation) {
+        this.temperature = temperature;
+        this.precipitation = precipitation;
     }
 }

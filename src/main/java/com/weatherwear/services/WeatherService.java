@@ -1,9 +1,8 @@
 package com.weatherwear.services;
-
-
-import com.weatherwear.WeatherResult;
+import com.google.gson.JsonObject;
 
 public interface WeatherService {
 
-    public WeatherResult getWeather();
+    JsonObject requestWeatherNow(int service, String ip);
+    JsonObject requestWeatherForecast(String date, String iata);
 }
