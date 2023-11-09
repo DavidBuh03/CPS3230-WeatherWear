@@ -1,20 +1,27 @@
 package com.weatherwear;
 import com.google.gson.JsonObject;
-import com.weatherwear.services.OnlineServices;
+import com.weatherwear.services.IpService;
+import com.weatherwear.services.WeatherService;
 public class Weather {
 
-    protected OnlineServices onlineServices;
     protected WeatherResult lastWeatherResult;
     protected Recommendation lastRecommendation;
     protected String currentIp;
 
-    public void setOnlineServices(OnlineServices onlineServices) { this.onlineServices = onlineServices; }
+    protected IpService ipService;
+
+    protected WeatherService weatherService;
+
+    public void setWeatherService(WeatherService weatherService) { this.weatherService = weatherService; }
+    public void setIpService(IpService ipService) { this.ipService = ipService; }
+
+    public Weather(){}
 
     public WeatherResult getWeatherNow() {
-        currentIp = onlineServices.getIpAddress();
+        currentIp = ipService.getIpAddress();
         JsonObject result;
         for (int i = 1; i <=2; i++) {
-            result = onlineServices.requestWeatherNow(i, currentIp);
+            result = weatherService.requestWeatherNow(i, currentIp);
             if (result!=null) {
                 lastWeatherResult = convertWeatherNowToWeatherResult(result);
                 break;
@@ -25,7 +32,7 @@ public class Weather {
 
     public WeatherResult getWeatherForecast(String date, String iata) {
         JsonObject result;
-        result = onlineServices.requestWeatherForecast(date, iata);
+        result = weatherService.requestWeatherForecast(date, iata);
         lastWeatherResult = convertWeatherForecastToWeatherResult(result);
         return lastWeatherResult;
     }

@@ -3,29 +3,13 @@ package com.weatherwear.services;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
 import java.net.URI;
-import java.net.URL;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.time.Duration;
 
-public class OnlineServices implements WeatherService, IpService {
-    @Override
-    public String getIpAddress() {
-        try {
-            String ip;
-            URL ipServiceUrl = new URL("http://checkip.amazonaws.com");
-            BufferedReader response = new BufferedReader(new InputStreamReader(ipServiceUrl.openStream()));
-            ip = response.readLine();
-            return ip;
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-        }
-        return null;
-    }
+public class OnlineWeatherService implements WeatherService {
     @Override
     public JsonObject requestWeatherNow(int service, String ip) {
         try {
@@ -98,5 +82,4 @@ public class OnlineServices implements WeatherService, IpService {
         }
         return null;
     }
-
 }

@@ -1,8 +1,12 @@
 package com.weatherwear;
+import com.weatherwear.services.OnlineIpService;
+import com.weatherwear.services.OnlineWeatherService;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.InputMismatchException;
 import java.util.Scanner;
-
-import com.weatherwear.services.OnlineServices;
+import java.util.concurrent.TimeUnit;
 
 public class WeatherWearApp {
 
@@ -11,7 +15,8 @@ public class WeatherWearApp {
         Scanner s = new Scanner(System.in);
         s.useDelimiter("\n");
         Weather weather = new Weather();
-        weather.setOnlineServices(new OnlineServices());
+        weather.setIpService(new OnlineIpService());
+        weather.setWeatherService(new OnlineWeatherService());
         int userInput = 0;
         do {
             try {
@@ -32,11 +37,35 @@ public class WeatherWearApp {
                         printResult(weather.lastWeatherResult, weather.lastRecommendation);
                     } break;
                     case 2: {
-                        System.out.println(
-                                "Enter a forecast date.\n" +
-                                        "(Not more than 10 days in the future)\n" +
-                                        "(Required format: YYYY/MM/dd) ");
-                        String date = s.nextLine();
+                        boolean validDate = false;
+                        String date;
+                        Date validateDate;
+                        do {
+                            System.out.println(
+                                    "Enter a forecast date.\n" +
+                                            "(Not more than 10 days in the future)\n" +
+                                            "(Required format: YYYY/MM/dd) ");
+                           date = s.nextLine();
+                           try {
+                               validateDate = new SimpleDateFormat("yyyy-MM-dd").parse(date);
+                               long difference = TimeUnit.MILLISECONDS.toDays(validateDate.getTime() - new Date().getTime());
+                               if (difference < 0) {
+                                   validDate = false;
+                                   System.out.println("Invalid date: cannot forecast a past date.");
+                               }
+                               else if (difference > 10) {
+                                   validDate = false;
+                                   System.out.println("Date cannot be more than 10 days into the future.");
+                               }
+                               else {
+                                    validDate = true;
+                               }
+                           } catch (Exception e) {
+                               System.out.println("Date was invalid.");
+                               validDate = false;
+                           }
+                        } while (!validDate);
+
                         System.out.println(
                                 "Enter an airport IATA code.\n" +
                                         "(E.g. MLA = Malta International Airport) ");
