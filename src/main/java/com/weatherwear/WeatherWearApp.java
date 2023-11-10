@@ -65,14 +65,28 @@ public class WeatherWearApp {
                                validDate = false;
                            }
                         } while (!validDate);
+                        boolean validIata = false;
+                        String iata;
+                        do {
+                            System.out.println(
+                                    "Enter an airport IATA code.\n" +
+                                            "(E.g. MLA = Malta International Airport) ");
+                            iata = s.nextLine();
+                            if (iata.length() == 3) {
+                                validIata = true;
+                                iata = iata.toUpperCase();
+                                for (int i = 0; i < iata.length(); i++) {
+                                    if (Character.isDigit(iata.charAt(i))) {
+                                        validIata = false;
+                                        break;
+                                    }
+                                }
+                            }
+                            else validIata = false;
+                            if (!validIata) System.out.println("Invalid IATA Code.");
 
-                        System.out.println(
-                                "Enter an airport IATA code.\n" +
-                                        "(E.g. MLA = Malta International Airport) ");
-                        String iata = s.nextLine();
-                        weather.recommend(weather.getWeatherForecast(date, iata));
-                        
-                        
+                        } while (!validIata);
+
                         weather.getWeatherForecast(date, iata);
                         weather.recommend(weather.lastWeatherResult);
                         System.out.println("Weather forecast for " + date + ":");
