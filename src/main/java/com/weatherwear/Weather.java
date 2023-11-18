@@ -93,17 +93,16 @@ public class Weather {
         );
     }
 
-    public Recommendation recommend(WeatherResult weatherResult) {
-        try {
-            Recommendation recommendation = new Recommendation((weatherResult.temperature<=15), (weatherResult.precipitation>0));
-            lastRecommendation = recommendation;
-            return recommendation;
-
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-        }
-        return null;
+    public boolean recommendColdClothing(WeatherResult weatherResult) {
+        return (weatherResult.temperature<=15);
+    }
+    public boolean recommendUmbrella(WeatherResult weatherResult) {
+        return (weatherResult.precipitation>0);
     }
 
-
+    public Recommendation recommend(WeatherResult weatherResult) {
+        Recommendation recommendation = new Recommendation(recommendColdClothing(weatherResult), recommendUmbrella((weatherResult)));
+        lastRecommendation = recommendation;
+        return recommendation;
+    }
 }

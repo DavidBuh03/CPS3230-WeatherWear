@@ -76,87 +76,69 @@ public class WeatherTests {
     }
 
     @Test
-    public void testRecommendationColdWeatherNoRain() {
+    public void testRecommendColdClothingLessThanFifteenDegrees() {
         //Setup
         WeatherResult testResult = new WeatherResult(TEMPERATURE_LESS_THAN_FIFTEEN_DEGREES, PRECIPITATION_ZERO);
-        Recommendation recommendation;
         //Exercise
-        recommendation = weather.recommend(testResult);
+        boolean result = weather.recommendColdClothing(testResult);
         //Verify
-        Assertions.assertTrue(recommendation.clothingCold);
-        Assertions.assertFalse(recommendation.umbrella);
+        Assertions.assertTrue(result);
         //Teardown
-
+    }
+    @Test
+    public void testRecommendColdClothingFifteenDegrees() {
+        //Setup
+        WeatherResult testResult = new WeatherResult(TEMPERATURE_FIFTEEN_DEGREES, PRECIPITATION_ZERO);
+        //Exercise
+        boolean result = weather.recommendColdClothing(testResult);
+        //Verify
+        Assertions.assertTrue(result);
+        //Teardown
+    }
+    @Test
+    public void testRecommendColdClothingHigherThanFifteenDegrees() {
+        //Setup
+        WeatherResult testResult = new WeatherResult(TEMPERATURE_HIGHER_THAN_FIFTEEN_DEGREES, PRECIPITATION_ZERO);
+        //Exercise
+        boolean result = weather.recommendColdClothing(testResult);
+        //Verify
+        Assertions.assertFalse(result);
+        //Teardown
+    }
+    @Test
+    public void testRecommendUmbrellaWhenNotRaining() {
+        //Setup
+        WeatherResult testResult = new WeatherResult(TEMPERATURE_FIFTEEN_DEGREES, PRECIPITATION_ZERO);
+        //Exercise
+        boolean result = weather.recommendUmbrella(testResult);
+        //Verify
+        Assertions.assertFalse(result);
+        //Teardown
+    }
+    @Test
+    public void testRecommendUmbrellaWhenRaining() {
+        //Setup
+        WeatherResult testResult = new WeatherResult(TEMPERATURE_FIFTEEN_DEGREES, PRECIPITATION_NONZERO);
+        //Exercise
+        boolean result = weather.recommendUmbrella(testResult);
+        //Verify
+        Assertions.assertTrue(result);
+        //Teardown
     }
 
     @Test
-    public void testRecommendationColdWeatherFifteenDegreesNoRain() {
+    public void testRecommendation() {
         //Setup
         WeatherResult testResult = new WeatherResult(TEMPERATURE_FIFTEEN_DEGREES, PRECIPITATION_ZERO);
         Recommendation recommendation;
         //Exercise
+        boolean coldResult = weather.recommendColdClothing(testResult);
+        boolean umbrellaResult = weather.recommendUmbrella(testResult);
         recommendation = weather.recommend(testResult);
         //Verify
-        Assertions.assertTrue(recommendation.clothingCold);
-        Assertions.assertFalse(recommendation.umbrella);
+        Assertions.assertEquals(coldResult, recommendation.clothingCold);
+        Assertions.assertEquals(umbrellaResult, recommendation.umbrella);
         //Teardown
-
-    }
-
-    @Test
-    public void testRecommendationWarmWeatherNoRain() {
-        //Setup
-        WeatherResult testResult = new WeatherResult(TEMPERATURE_HIGHER_THAN_FIFTEEN_DEGREES, PRECIPITATION_ZERO);
-        Recommendation recommendation;
-        //Exercise
-        recommendation = weather.recommend(testResult);
-        //Verify
-        Assertions.assertFalse(recommendation.clothingCold);
-        Assertions.assertFalse(recommendation.umbrella);
-        //Teardown
-
-    }
-
-    @Test
-    public void testRecommendationColdWeatherWithRain() {
-        //Setup
-        WeatherResult testResult = new WeatherResult(TEMPERATURE_LESS_THAN_FIFTEEN_DEGREES, PRECIPITATION_NONZERO);
-        Recommendation recommendation;
-        //Exercise
-        recommendation = weather.recommend(testResult);
-        //Verify
-        Assertions.assertTrue(recommendation.clothingCold);
-        Assertions.assertTrue(recommendation.umbrella);
-        //Teardown
-
-    }
-
-    @Test
-    public void testRecommendationColdWeatherFifteenDegreesWithRain() {
-        //Setup
-        WeatherResult testResult = new WeatherResult(TEMPERATURE_FIFTEEN_DEGREES, PRECIPITATION_NONZERO);
-        Recommendation recommendation;
-        //Exercise
-        recommendation = weather.recommend(testResult);
-        //Verify
-        Assertions.assertTrue(recommendation.clothingCold);
-        Assertions.assertTrue(recommendation.umbrella);
-        //Teardown
-
-    }
-
-    @Test
-    public void testRecommendationWarmWeatherWithRain() {
-        //Setup
-        WeatherResult testResult = new WeatherResult(TEMPERATURE_HIGHER_THAN_FIFTEEN_DEGREES, PRECIPITATION_NONZERO);
-        Recommendation recommendation;
-        //Exercise
-        recommendation = weather.recommend(testResult);
-        //Verify
-        Assertions.assertFalse(recommendation.clothingCold);
-        Assertions.assertTrue(recommendation.umbrella);
-        //Teardown
-
     }
 }
 
